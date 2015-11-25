@@ -24,12 +24,16 @@ _handle = int(sys.argv[1])
 FEEDS = {
   'hardcore_history': {
     'url': 'http://feeds.feedburner.com/dancarlin/history?format=xml',
-    'icon':'http://www.dancarlin.com/wp-content/uploads/2014/08/hh-cover.jpg',
+    #'icon':'http://www.dancarlin.com/wp-content/uploads/2014/08/hh-cover.jpg',
+    #'icon': 'http://castig.org/wp-content/uploads/2015/07/mza_6421670988208781371.600x600-75.jpg',
+    'icon': 'http://www.dancarlin.com/wp-content/uploads/2014/07/HH-current-500x450.jpg',
     'genre': 'History',
     'name': xbmcaddon.Addon().getLocalizedString(30001).encode('utf-8')},
   'common_sense': {
     'url': 'http://feeds.feedburner.com/dancarlin/commonsense?format=xml',
-    'icon': 'http://www.dancarlin.com/wp-content/uploads/2014/08/cs-cover.jpg',
+    #'icon': 'http://www.dancarlin.com/wp-content/uploads/2014/08/cs-cover.jpg',
+    #'icon': 'http://www.dancarlin.com/wp-content/uploads/2014/07/CS-current.jpg',
+    'icon': 'http://www.dancarlin.com/wp-content/uploads/2014/07/CS-current-500x450.jpg',
     'genre': 'News',
     'name': xbmcaddon.Addon().getLocalizedString(30002).encode('utf-8')}}
 
@@ -90,8 +94,9 @@ def list_categories():
         # Create a list item with a text label and a thumbnail image.
         list_item = xbmcgui.ListItem(label=FEEDS[category]['name'], thumbnailImage=FEEDS[category]['icon'])
         # set fanart
-        list_item.setProperty('fanart_image', FEEDS[category]['icon'])
-
+        my_addon = xbmcaddon.Addon('plugin.audio.dancarlin')
+        #list_item.setProperty('fanart_image', my_addon.getAddonInfo('fanart'))
+        list_item.setArt({'fanart': my_addon.getAddonInfo('fanart')})
         # Set additional info for the list item.
         list_item.setInfo('video', {'title': category, 'genre': 'news'})
         list_item.setInfo('audio', {'title': category, 'genre': 'news'})
@@ -125,7 +130,9 @@ def list_episodes(category):
         # Create a list item with a text label and a thumbnail image.
         list_item = xbmcgui.ListItem(label=episode['title'], thumbnailImage=episode['thumb'])
         # set fanart
-        list_item.setProperty('fanart_image', episode['thumb'])
+        my_addon = xbmcaddon.Addon('plugin.audio.dancarlin')
+        #list_item.setProperty('fanart_image', my_addon.getAddonInfo('fanart'))
+        list_item.setArt({'fanart': my_addon.getAddonInfo('fanart')})
         # Set additional info for the list item.
         #list_item.setInfo('video', {'title': episode['title'], 
                                     #'genre': episode['genre'],
