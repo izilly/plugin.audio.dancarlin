@@ -21,19 +21,17 @@ _url = sys.argv[0]
 # Get the plugin handle as an integer number.
 _handle = int(sys.argv[1])
 
-FEED_URLS = {'hardcore_history': 'http://feeds.feedburner.com/dancarlin/history?format=xml',
-             'common_sense': 'http://feeds.feedburner.com/dancarlin/commonsense?format=xml',
-            }
-FEED_ICONS = {'hardcore_history': 'http://www.dancarlin.com/wp-content/uploads/2014/08/hh-cover.jpg',
-              'common_sense': 'http://www.dancarlin.com/wp-content/uploads/2014/08/cs-cover.jpg',
-             }
-FEED_GENRES = {'hardcore_history': 'History',
-               'common_sense': 'News'
-              }
-
-FEED_NAMES = {'hardcore_history': xbmcaddon.Addon().getLocalizedString(30001).encode('utf-8'),
-              'common_sense': xbmcaddon.Addon().getLocalizedString(30002).encode('utf-8'),
-             }
+FEEDS = {
+  'hardcore_history': {
+    'url': 'http://feeds.feedburner.com/dancarlin/history?format=xml',
+    'icon':'http://www.dancarlin.com/wp-content/uploads/2014/08/hh-cover.jpg',
+    'genre': 'History',
+    'name': xbmcaddon.Addon().getLocalizedString(30001).encode('utf-8')},
+  'common_sense': {
+    'url': 'http://feeds.feedburner.com/dancarlin/commonsense?format=xml',
+    'icon': 'http://www.dancarlin.com/wp-content/uploads/2014/08/cs-cover.jpg',
+    'genre': 'News',
+    'name': xbmcaddon.Addon().getLocalizedString(30002).encode('utf-8')}}
 
 
 def get_categories():
@@ -52,7 +50,7 @@ def get_episodes(category):
     Returns:
         list of episodes
     """
-    feed_url = FEED_URLS[category]
+    feed_url = FEEDS[category]['url']
     xmlfile = urllib2.urlopen(feed_url)
     tree = et(file=xmlfile)
     root = tree.getroot()
@@ -75,8 +73,8 @@ def get_episode_info(episode, category):
     enclosure = episode.find('enclosure')
     ei['length'] = enclosure.get('length')
     ei['url'] = enclosure.get('url')
-    ei['thumb'] = FEED_ICONS[category]
-    ei['genre'] = FEED_GENRES[category]
+    ei['thumb'] = FEEDS[category]['icon']
+    ei['genre'] = FEEDS[category]['genre']
     return ei
 
 def list_categories():
@@ -90,9 +88,9 @@ def list_categories():
     listing = []
     for category in categories:
         # Create a list item with a text label and a thumbnail image.
-        list_item = xbmcgui.ListItem(label=FEED_NAMES[category], thumbnailImage=FEED_ICONS[category])
+        list_item = xbmcgui.ListItem(label=FEEDS[category]['name'], thumbnailImage=FEEDS[category]['icon'])
         # set fanart
-        list_item.setProperty('fanart_image', FEED_ICONS[category])
+        list_item.setProperty('fanart_image', FEEDS[category]['icon'])
 
         # Set additional info for the list item.
         list_item.setInfo('video', {'title': category, 'genre': 'news'})
