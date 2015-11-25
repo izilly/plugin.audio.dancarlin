@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="plugin.audio.dancarlin"
+version="0.0.1"
+name="Dan Carlin Podcasts"
+provider-name="izilly">
+<requires>
+  <import addon="xbmc.python" version="2.0"/>
+</requires>
+<extension point="xbmc.python.pluginsource" library="main.py">
+  <!--<provides>video audio</provides>-->
+  <provides>audio</provides>
+  <!--<provides>video</provides>-->
+</extension>
+<extension point="xbmc.addon.metadata">
+  <summary lang="en">Dan Carlin Audio Podcasts: 'Hardcore History' and 'Common Sense'</summary>
+  <description lang="en">Dan Carlin Audio Podcasts: 'Hardcore History' and 'Common Sense'</description>
+</extension>
+</addon>
